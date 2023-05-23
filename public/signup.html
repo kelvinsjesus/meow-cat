@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar conta</title>
+    <link rel="stylesheet" href="css/signup.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="js/signup.js" defer></script>
+</head>
+<body>
+    <div class="container">
+
+        <form id="register">
+            <span>Crie sua conta</span>
+            <div class="field">
+                <label for="fullName">Nome</label>
+                <input type="text" id="fullName" required autofocus>
+                <span role="inputAlert" id="nameError" aria-hidden="true"></span>
+            </div>
+            <div class="field">
+                <label for="username">Nome de usuário</label>
+                <input type="text" id="username" required>
+                <span role="inputAlert" id="usernameError" aria-hidden="true"></span>
+            </div>
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+                <span role="inputAlert" id="emailError" aria-hidden="true"></span>
+            </div>
+            <div class="field">
+                <label for="password">Senha</label>
+                <input type="password" id="password" required>
+                <span role="inputAlert" id="passwordError" aria-hidden="true"></span>
+                <!-- <div id="passwordSteps">
+                    <span role="inputAlert" class="steps" id="firstStep" aria-hidden="true">
+                        <i class="ph-fill ph-x-circle"></i> 
+                        <i class="ph-fill ph-check-circle"></i> 
+                        Deve ter pelo menos 8 caracteres.
+                    </span>
+                    <span role="inputAlert" class="steps" id="secondStep" aria-hidden="true">
+                        <i class="ph-fill ph-x-circle"></i> 
+                        <i class="ph-fill ph-check-circle"></i>
+                        Deve conter ao menos um número.
+                    </span>
+                    <span role="inputAlert" class="steps" id="thirdStep" aria-hidden="true">
+                        <i class="ph-fill ph-x-circle"></i> 
+                        <i class="ph-fill ph-check-circle"></i> 
+                        Deve conter ao menos um caractere especial.
+                    </span>
+                </div> -->
+            </div>
+            <div class="field">
+                <label for="confirmPassword">Confirmar Senha</label>
+                <input type="password" id="confirmPassword" required>
+                <span role="inputAlert" id="confirmPasswordError" aria-hidden="true"></span>
+            </div>
+            <button id="submit">Criar conta</button>
+        </form>
+    </div>
+    </body>
+    </html>

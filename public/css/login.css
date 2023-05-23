@@ -1,0 +1,20 @@
+/* #login {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 24rem;
+    align-items: center;
+    gap: 8px;
+}
+
+#login button#submit {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    padding: 1rem 1.5rem;
+    border-radius: 4px;
+}
+
+#login button#submit:hover {
+    background-color: rgba(0, 0, 0, 0.84);
+} */
