@@ -1,9 +1,9 @@
 const formRegister = document.getElementById('register');
-const fullName = document.getElementById('fullName');
+const fullName = document.getElementById('full-name');
 const username = document.getElementById('username');
 const email = document.getElementById('email');
 const password = document.getElementById('password');
-const confirmPassword = document.getElementById('confirmPassword');
+const confirmPassword = document.getElementById('confirm-password');
 
 const messagesError = {
     nameError: {
@@ -61,7 +61,7 @@ function validateEmail(email) {
 formRegister.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    fetch('/users/register', {
+    fetch('/api/users/register', {
         method: 'POST',
         headers: {
             "Content-Type": "application/json"
