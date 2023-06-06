@@ -92,6 +92,12 @@ function updatePassword(id, password, token) {
     return database.executar(statementSQL);
 }
 
+function createUserProfile(userId) {
+    var statementSQL = `INSERT INTO UserProfile (userId) VALUES ('${userId}');`;
+
+    return database.executar(statementSQL);
+}
+
 function getUserProfile(userId) {
     var statementSQL = `
     SELECT User.id, User.name, User.username, 
@@ -106,6 +112,10 @@ function getUserProfile(userId) {
     console.log("Executando a instrução SQL: \n" + statementSQL);
 
     return database.executar(statementSQL)
+}
+
+function updateUserProfile(userId) {
+    
 }
 
 function saveAvatarPath(userId, image) {
@@ -137,5 +147,6 @@ module.exports = {
     updatePassword,
     updateRecoveryToken,
     saveAvatarPath,
-    saveBannerPath
+    saveBannerPath,
+    createUserProfile
 };

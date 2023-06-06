@@ -1,3 +1,4 @@
+DROP DATABASE freestyle;
 CREATE DATABASE freestyle;
 USE freestyle;
 
@@ -15,15 +16,16 @@ CREATE TABLE User (
 );
 
 CREATE TABLE UserProfile(
-    id int PRIMARY KEY auto_increment,
-    avatarUrl varchar(256),
-    bannerUrl varchar(256),
-    bio varchar(256),
-    location varchar(64),
-    status varchar(32),
+    id int auto_increment,
+    avatarUrl varchar(256) default '',
+    bannerUrl varchar(256) default '',
+    bio varchar(256) default '',
+    location varchar(64) default '',
+    status varchar(32) default '',
     userId char(12),
     CONSTRAINT fkProfileOwner FOREIGN KEY (userId)
         REFERENCES User(id),
+	CONSTRAINT pkUserProfileAndUserId PRIMARY KEY (id, userId),
     updatedAt datetime DEFAULT current_timestamp
 );
     -- pets int(select)
@@ -53,13 +55,13 @@ ALTER TABLE Pet MODIFY COLUMN gender longtext;
 
 CREATE TABLE PetProfile(
     id int PRIMARY KEY auto_increment,
-    avatarUrl varchar(256),
-    bannerUrl varchar(256),
-    bio varchar(256),
-    location varchar(64),
-    status varchar(32),
+    avatarUrl varchar(256) default '',
+    bannerUrl varchar(256) default '',
+    bio varchar(256) default '',
+    location varchar(64) default '',
+    status varchar(32) default '',
     petId int,
-    CONSTRAINT fkPetProfileOwner FOREIGN KEY (userId)
+    CONSTRAINT fkPetProfileOwner FOREIGN KEY (petId)
         REFERENCES Pet(id),
     updatedAt datetime DEFAULT current_timestamp
 );
@@ -69,7 +71,11 @@ INSERT INTO User (id, name, username, email, password) VALUES
     ('105aea522f8c', 'Kelvin Santos', 'kelvin', 'kelvin@email.com', 'secret'),
     ('13de7db5fe12', 'John Doe', 'john_doe', 'john.doe@email.com', 'secret'),
     ('183a48614c84', 'Fala Dele da Silva', 'faladele', 'faladele@email.com', 'secret');
-
+    
+INSERT INTO UserProfile (userId) VALUES 
+    ('13de7db5fe12'),
+    ('183a48614c84');
+    
 INSERT INTO UserProfile (avatarUrl, bannerUrl, bio, location, status, userId) VALUES
     ('public/assets/avatar/vodcat.png', 'public/assets/banner/vodcat.png', 'Eu tenho o gato mais lindo do mundo', '😸', 'São Paulo, SP', '105aea522f8c');
 
@@ -87,20 +93,20 @@ INSERT INTO PetProfile (avatarUrl, bannerUrl, bio, location, status, petId) VALU
 
 -- DESC TABLES --
 DESC Pet;
-DESC PetProfile
+DESC PetProfile;
 DESC User;
 DESC UserProfile;
 
 -- CLEAR TABLES --
 TRUNCATE Pet;
-TRUNCATE PetProfile
+TRUNCATE PetProfile;
 TRUNCATE User;
 TRUNCATE UserProfile;
 
 -- SELECTS --
 -- ALL
 SELECT * FROM Pet;
-SELECT * FROM PetProfile
+SELECT * FROM PetProfile;
 SELECT * FROM User;
 SELECT * FROM UserProfile;
 
@@ -124,6 +130,16 @@ Profile.avatarUrl, Profile.bannerUrl, Profile.bio, Profile.location, Profile.sta
 FROM UserProfile as Profile JOIN User
 	ON Profile.userId = User.id
 		WHERE userId = '105aea522f8c';
+
+-- getUserProfile
+
+    SELECT User.id, User.name, User.username, 
+        DATE_FORMAT(User.createdAt,'%d/%m/%Y %H:%i:%s') as createdAt,
+        Profile.avatarUrl, Profile.bannerUrl, 
+        Profile.bio, Profile.location, Profile.status
+            FROM UserProfile as Profile JOIN User
+            ON Profile.userId = User.id
+                WHERE userId= '105aea522f8c';
 
 -- RESET DB -- 
 DROP DATABASE freestyle;

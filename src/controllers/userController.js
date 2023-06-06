@@ -85,7 +85,9 @@ function validateRegister(req, res) {
         userModel.register(id, name, username, email, password)
             .then(
                 function (resultado) {
-                    res.json(resultado);
+                    res.json(resultado).then((user) => {
+                        userModel.createUserProfile(user.id);
+                    });
                 }
             ).catch(
                 function (erro) {
