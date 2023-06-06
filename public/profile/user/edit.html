@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Profile</title>
+    <title>Editar Perfil</title>
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/edit-profile.css">
 </head>
@@ -75,13 +75,7 @@
 
     // Esse setItem é apenas uma simulação, pois ele deve ocorrer no login,
     // Vai ser utilizado para recuperação dos dados configurados no perfil
-    localStorage.setItem('authenticatedUser', JSON.stringify({    
-        id: '105aea522f8c',
-        name: 'Kelvin Santos',
-        username: 'kelvin',
-    }));
-
-    const userStorage = JSON.parse(localStorage.getItem('authenticatedUser'));
+    const userStorage = JSON.parse(sessionStorage.getItem('authenticatedUser'));
     console.log(userStorage);
 
     let profileConfig;

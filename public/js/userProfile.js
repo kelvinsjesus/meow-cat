@@ -3,11 +3,12 @@ const banner = document.getElementById('img-banner');
 const userData = document.getElementById('userData');
 
 const urlParams = new URLSearchParams(window.location.search);
-const username = urlParams.get('username');
+const username = urlParams.get('@');
 
-let user;
+// const username = JSON.parse(sessionStorage.getItem('authenticatedUser')).username;
 
 window.addEventListener('DOMContentLoaded', function() {
+    let user;
     console.log(username);
     fetch(`/api/users/${username}`, {
         method: 'GET',

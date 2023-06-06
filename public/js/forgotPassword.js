@@ -4,9 +4,7 @@ const password = document.getElementById('password');
 
 formForgotPassword.addEventListener('submit', (e) => {
     e.preventDefault();
-
-    console.log("EMAIL: " + email.value);
-
+    
     fetch('/api/users/forgot-password/', {
         method: 'POST',
         headers: {

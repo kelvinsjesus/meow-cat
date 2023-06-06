@@ -8,9 +8,11 @@
     --neutral-b: #171717;
     --neon: #25ffce;
     --blue: #25adff;
+    --blue-b: #2581ff;
     --red: #ff2556;
 
-    --success: #25ff77;
+    --green: #25ff77;
+    --success: #22c55e;
     --info: #25fffa;
     --warning: #ffce25;
 }
@@ -25,6 +27,10 @@
     text-decoration: none;
 }
 
+.font-small {
+    font-size: 14px;
+}
+
 html {
     font-family: var(--font-family);
     font-size: var(--font-size);
@@ -36,6 +42,15 @@ html {
     max-width: 1280px;
     min-height: 100vh;
     margin: 0 auto;
+}
+
+.content {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .field {
@@ -54,20 +69,32 @@ form {
 }
 
 label {
+    width: 100%;
+    display: inline-block;
     font-weight: 500;
 }
 
 input, textarea {
     font-family: var(--font-family);
     font-size: 14px;
-    font-weight: 500;
     background-color: var(--neutral-w);
     padding: 10px 12px;
     border-radius: 4px;
 }
+
 input:focus, 
 textarea:focus {
     outline: 2px solid var(--blue);
+}
+
+input[type='password'] {
+    font-family: sans-serif;
+}
+
+button {
+    font-family: var(--font-family);
+    font: 500;
+    font-size: 1rem;
 }
 
 button#submit {
@@ -86,4 +113,63 @@ button#submit:hover {
 button#submit:focus {
     outline: 2px solid var(--neutral-b);
     outline-offset: 1px;
+}
+
+a {
+    color: var(--blue-b);
+}
+
+.form-header {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.hint {
+    color: #262626;
+}
+
+.danger {
+    color: var(--red);
+}
+
+.success {
+    color: var(--success)
+}
+
+form#login,
+form#register,
+form#forgot-password {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: #ffffff;
+    max-width: 24rem;
+    padding: 2rem 1.5rem;
+    border-radius: 4px;
+    border: 2px solid var(--neutral-w);
+}
+
+.spin-load {
+    width: 32px;
+    height: 32px;
+    color: var(--green);
+    display: inline;
+    animation: spin 1s linear infinite;
+}
+
+#form-response {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

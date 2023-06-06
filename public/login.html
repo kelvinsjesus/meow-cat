@@ -16,18 +16,27 @@
 </head>
 <body>
     <div class="container">
-        <form id="login">
-            <span>Log In</span>
-            <div class="field">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="john.doe@email.com" required autofocus>
-            </div>
-            <div class="field">
-                <label for="password">Senha</label>
-                <input type="password" id="password" placeholder="•••••••••" required>
-            </div>
-            <button id="submit">Entrar</button>
-        </form>
+        <div class="content">
+            <form id="login">
+                <span class="form-header">Log In</span>
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="johnny@email.com" autofocus>
+                </div>
+                <div class="field">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder="•••••••••" >
+                    <span class="font-small" style="margin: 8px 0;">
+                        <a href="forgot-password.html" >Esqueci minha senha</a>
+                    </span>
+                </div>
+                <div id="form-response" class="font-small"></div>
+                <button id="submit">Entrar</button>
+                <span class="font-small">
+                    Ainda não possui uma conta? <a href="signup.html">Crie aqui</a>
+                </span>
+            </form>
+        </div>
     </div>
     </body>
 </html>
