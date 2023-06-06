@@ -149,16 +149,46 @@ function resetPassword(req, res) {
 }
 
 function findUsername(req, res) {
+    // let username = req.body.usernameServer;
     let username = req.params.username;
 
     userModel.userByUsername(username)
-        .then(function(result) {
-            res.status(200).json(result);
-        }).catch(function(erro) {
-            console.log(erro)
-            res.status(500).json(erro.sqlMessage);
+    .then(function(result) {
+        let userId = result[0].id;
+        
+        userModel.getUserProfile(userId).then(function(profileData) {
+            res.status(200).json(profileData);
         });
+    }).catch(function(erro) {
+        console.log(erro)
+        res.status(500).json(erro.sqlMessage);
+    });
 }
+
+function saveAvatar() {
+    const userId = req.body.userId;
+    const image = req.file.filename;
+
+    userModel.saveAvatarPath(userId, image)
+    .then(result => {
+        res.status(201).send("Imagem salva com sucesso" + result.json());
+    }).catch(err => {
+        res.status(500).send(err);
+    });
+}
+
+function saveBanner() {
+    const userId = req.body.userId;
+    const image = req.file.filename;
+
+    userModel.saveAvatarPath(userId, image)
+    .then(result => {
+        res.status(201).send("Imagem salva com sucesso" + result.json());
+    }).catch(err => {
+        res.status(500).send(err);
+    });
+}
+
 
 module.exports = {
     validateLogin,
@@ -167,5 +197,7 @@ module.exports = {
     test,
     forgotPassword,
     resetPassword,
-    findUsername
+    findUsername,
+    saveAvatar,
+    saveBanner
 }

@@ -18,7 +18,6 @@ function login(email, password) {
     return database.executar(instrucao);
 }
 
-// Coloque os mesmos parâmetros aqui.    Vá para a var instrucao
 function register(id, name, username, email, password) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function register():", name, username, email, password);
     
@@ -53,7 +52,7 @@ function userByToken (token) {
 
 function userByUsername(username) {
 	const statementSQL = `
-        SELECT name, username, createdAt FROM User WHERE username = '${username}';
+        SELECT id, name, username, createdAt FROM User WHERE username = '${username}';
     `
 
     console.log("Executando a instrução SQL: \n" + statementSQL);
@@ -93,6 +92,39 @@ function updatePassword(id, password, token) {
     return database.executar(statementSQL);
 }
 
+function getUserProfile(userId) {
+    var statementSQL = `
+    SELECT User.id, User.name, User.username, User.createdAt, 
+        Profile.avatarUrl, Profile.bannerUrl, 
+        Profile.bio, Profile.location, Profile.status
+            FROM UserProfile as Profile JOIN User
+            ON Profile.userId = User.id
+                WHERE userId= '${userId}';
+    `;
+    
+    console.log("Executando a instrução SQL: \n" + statementSQL);
+
+    return database.executar(statementSQL)
+}
+
+function saveAvatarPath(userId, image) {
+    const statementSQL = `
+        INSERT INTO UserProfile (avatarUrl) VALUES
+            ('${image}') WHERE userId = '${userId}';
+    `;
+  
+    return database.executar(statementSQL);
+}
+
+function saveBannerPath(userId, image) {
+    const statementSQL = `
+        INSERT INTO UserProfile (bannerUrl) VALUES
+            ('${image}') WHERE userId = '${userId}';
+    `;
+  
+    return database.executar(statementSQL);
+}
+
 module.exports = {
     login,
     register,
@@ -100,6 +132,9 @@ module.exports = {
     userByEmail,
     userByToken,
     userByUsername,
+    getUserProfile,
     updatePassword,
-    updateRecoveryToken
+    updateRecoveryToken,
+    saveAvatarPath,
+    saveBannerPath
 };
