@@ -1,9 +1,10 @@
 const formRegister = document.getElementById('register');
-const fullName = document.getElementById('full-name');
-const username = document.getElementById('username');
-const email = document.getElementById('email');
-const password = document.getElementById('password');
-const confirmPassword = document.getElementById('confirm-password');
+const inputFullName = document.getElementById('full-name');
+const inputUsername = document.getElementById('username');
+const inputEmail = document.getElementById('email');
+const inputPassword = document.getElementById('password');
+const inputConfirmPassword = document.getElementById('confirm-password');
+const formResponse = document.getElementById('form-response');
 
 const messagesError = {
     nameError: {
@@ -25,57 +26,68 @@ const messagesError = {
     }
 }
 
-function checkEmptyField(input) {
-    let fieldValue = input.value.trim();
-
-    if (fieldValue.length > 0) {
-        return false
-    } else {
-        return true
-    }
-}
-
-function suggestUsername(fullName) {
-    let clean = fullName.replaceAll(' ', '_').toLowerCase();
-
-    console.log(clean)
-}
-suggestUsername('Kelvin Santos de Jesus')
-
-function validateEmail(email) {
-    // todo email é composto por um usuário e um domínio,
-    // user@domain.com
-    // kelvin@gmail.com
-    // ou seja o destinatário dos emails sera o kelvin
-    // e o domínio é do gmail
-
-    let atPosition = email.indexOf('@');
-    let user = email.substring(0, atPosition);
-    let domain = email.substring(atPosition + 1, email.length);
-
-    // TODO
-}
-
-// let fieldEmail = String(email.value).trim();
-// validateEmail(fieldEmail)
 formRegister.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    fetch('/api/users/register', {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            nameServer: fullName.value,
-            usernameServer: username.value,
-            emailServer: email.value,
-            passwordServer: password.value,
-            confirmPasswordServer: confirmPassword.value
-        })
-    }).then(function (res) {
-        console.log("resposta: ", res);
-    }).catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-    });
+    const fullName = inputFullName.value.trim();
+    const username = inputUsername.value.trim();
+    const email = inputEmail.value.trim();
+    const password = inputPassword.value.trim();
+    const confirmPassword = inputConfirmPassword.value.trim();
+
+    if (fullName.length < 1) {
+        displayError('Informe seu nome');
+
+    } else if (username.length < 1 || username.indexOf(' ') > -1) {
+        displayError('Informe seu nome de usuário. Sem espaços!');
+
+    } else if (email.length < 1 && email.indexOf('@') == -1) {
+        displayError('Informe um email válido !');
+    } else if (password.length < 8) {
+        displayError('A senha deve ter no mínimo 8 caracteres');
+
+    } else if (password !== confirmPassword) {
+        displayError('As senhas não coincidem');
+
+    } else {
+        fetch('/api/users/register', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nameServer: fullName,
+                usernameServer: username,
+                emailServer: email,
+                passwordServer: password,
+                confirmPasswordServer: confirmPassword
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                console.log(resposta)
+                formRegister.innerHTML = `
+                    <div id="form-response">
+                        <span class="success" style="padding: 1rem 0; font-size: 20px">Cadastro realizado com sucesso <i class="ri-checkbox-circle-line"></i></span>
+                        <a href="login.html" class="to-login">Fazer Login</a>
+                    </div
+                `;
+            } else {
+                resposta.text().then((error) => {
+                    formResponse.innerHTML = `
+                        <span class="danger" style="padding: 1rem 0; font-size: 20px">${error} <i class="ri-close-circle-line"></i></span>
+                    `;
+                })
+            }
+        }).catch(function (error) {
+            console.log(`#ERRO: ${error}`);
+
+        });
+    }
 })
+
+function displayError(message) {
+    const spanMessage = `<span class="danger">${message}</span>`
+    console.log(spanMessage)
+
+    formResponse.innerHTML = spanMessage;
+}

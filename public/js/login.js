@@ -46,9 +46,6 @@ formLogin.addEventListener('submit', (e) => {
                 formResponse.innerHTML = `<span class="danger">Email ou Senha inválidos!</span>`;
                 console.log("não ok");
                 console.log(resposta);
-                resposta.text().then(texto => {
-                    console.error(texto);
-                })
             }
         }).catch((error) => {
             console.log(`Erro: ${error}`);

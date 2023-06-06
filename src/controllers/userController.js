@@ -65,7 +65,7 @@ function validateRegister(req, res) {
         // base: 16 | maxChars: 12
     var id = uid.uniqueId(16, 12);
     var name = req.body.nameServer;
-    var username = req.body.usernameServer;
+    var username = req.body.usernameServer.toLowerCase();
     var email = req.body.emailServer;
     var password = req.body.passwordServer;
     var confirmPassword = req.body.confirmPasswordServer;

@@ -138,7 +138,8 @@ a {
 
 form#login,
 form#register,
-form#forgot-password {
+form#forgot-password,
+form#reset-password {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -163,6 +164,16 @@ form#forgot-password {
     align-items: center;
     justify-content: center;
     gap: .5rem;
+}
+
+.to-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    color: #ffffff;
+    background-color: var(--blue-b);
+    border-radius: 4px;
 }
 
 @keyframes spin {

@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const smtp = require('./smtpConfig');
 
 async function main(token, recipientEmail, recipientName) {
-    const link = `localhost:3000/password-reset.html?token=${token}`;
+    const link = `localhost:3000/reset-password.html?token=${token}`;
 
     // criar uma conta de teste
     // let testAccount = await nodemailer.createTestAccount();

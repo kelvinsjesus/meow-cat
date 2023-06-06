@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Styles -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <!-- Scripts -->
     <script src="js/signup.js" defer></script>
@@ -21,45 +22,26 @@
                 <span class="form-header">Crie sua conta</span>
                 <div class="field">
                     <label for="full-name">Nome</label>
-                    <input type="text" id="full-name" placeholder="Johnny Doe" required autofocus>
-                    <span id="name-error"></span>
+                    <input type="text" id="full-name" placeholder="Johnny Doe" autofocus>
                 </div>
                 <div class="field">
                     <label for="username">Nome de usuário</label>
-                    <input type="text" id="username" placeholder="johnny_doe" required>
-                    <span id="username-error"></span>
+                    <input type="text" id="username" placeholder="johnny_doe">
                 </div>
                 <div class="field">
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="name@domain.com" required>
-                    <span id="email-error"></span>
+                    <input type="email" id="email" placeholder="name@domain.com">
                 </div>
                 <div class="field">
                     <label for="password">Senha</label>
-                    <input type="password" id="password" placeholder="•••••••••" required>
-                    <span id="password-error"></span>
-                    <!-- <div id="passwordSteps">
-                        <span class="steps" id="firstStep">
-                            <i class="ph-fill ph-x-circle"></i> 
-                            <i class="ph-fill ph-check-circle"></i> 
-                            Deve ter pelo menos 8 caracteres.
-                        </span>
-                        <span class="steps" id="secondStep">
-                            <i class="ph-fill ph-x-circle"></i> 
-                            <i class="ph-fill ph-check-circle"></i>
-                            Deve conter ao menos um número.
-                        </span>
-                        <span class="steps" id="thirdStep">
-                            <i class="ph-fill ph-x-circle"></i> 
-                            <i class="ph-fill ph-check-circle"></i> 
-                            Deve conter ao menos um caractere especial.
-                        </span>
-                    </div> -->
+                    <input type="password" id="password" placeholder="•••••••••">
                 </div>
                 <div class="field">
                     <label for="confirm-password">Confirmar Senha</label>
-                    <input type="password" id="confirm-password" placeholder="•••••••••" required>
-                    <span id="confirm-password-error"></span>
+                    <input type="password" id="confirm-password" placeholder="•••••••••">
+                </div>
+                <div id="form-response">
+
                 </div>
                 <button id="submit">Criar conta</button>
                 <span class="font-small">
