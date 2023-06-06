@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/edit-profile.css">
+</head>
+<body>
+    <div class="fields-profile-edit">
+        <div class="field">
+            <label for="display-name">Nome de exibição</label>
+            <input type="text" id="display-name">
+        </div>
+        <div class="field">
+            <label for="bio">Bio</label>
+            <textarea type="text" id="bio"></textarea>
+        </div>
+        <div class="field">
+            <label for="location">Location</label>
+            <input type="text" id="location">
+        </div>
+        <div class="field">
+            <label for="status">Status</label>
+            <input type="text" id="status">
+        </div>
+    </div>
+
+    <div class="profile-preview">
+        <div class="card">
+            <div class="card-banner">
+                <img src="../../assets/uploads/banner/catinho-banner.jpg">
+            </div>
+            <div class="card-bar">
+                <div class="card-avatar">
+                    <img src="../../assets/uploads/avatar/vodcat.png">
+                </div>
+                <div class="display-name">
+                    <span>Kelvin Santos</span>
+                    <span>@kelvin</span>
+                </div>
+            </div>
+        </div>
+        <div class="choose-image">
+            <div class="field">
+                <label for="banner">Escolha uma foto para o seu banner:</label>
+                <input type="file" id="banner">      
+            </div>
+            <div class="field">
+                <label for="avatar">Escolha uma foto de perfil:</label>
+                <input type="file" id="avatar" accept="image/png, image/jpeg">
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <button class="save" id="save">
+            Salvar mudanças
+        </button>
+    </div>
+</body>
+<script>
+    // Inputs
+    const displayName = document.getElementById('display-name');
+    const bio = document.getElementById('bio');
+    const userLocation = document.getElementById('location');
+    const status = document.getElementById('status');
+    const banner = document.getElementById('banner');
+    const avatar = document.getElementById('avatar');
+
+    // Button
+    const save = document.getElementById('save');
+
+    // Esse setItem é apenas uma simulação, pois ele deve ocorrer no login,
+    // Vai ser utilizado para recuperação dos dados configurados no perfil
+    localStorage.setItem('authenticatedUser', JSON.stringify({    
+        id: '105aea522f8c',
+        name: 'Kelvin Santos',
+        username: 'kelvin',
+    }));
+
+    const userStorage = JSON.parse(localStorage.getItem('authenticatedUser'));
+    console.log(userStorage);
+
+    let profileConfig;
+
+    function loadUserConfig() {
+        fetch(`/api/users/${userStorage.username}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function(result) {
+            result.json()
+            .then(json => {
+                profileConfig = json[0];
+
+                // localStorage.setItem('profile', JSON.stringify(profileConfig));
+                
+            }).then(() => {
+                displayName.value = profileConfig.name;
+                bio.value = profileConfig.bio;
+                userLocation.value = profileConfig.location;
+                status.value = profileConfig.status;
+            })
+        });
+    }
+    loadUserConfig();
+
+
+    function saveConfig() {
+        const newConfig = {
+            displayName,
+            bio,
+            location,
+            status,
+            banner,
+            avatar
+        }
+    }
+
+    // PRECISO SALVAR OS NOVOS VALORES
+    // VERIFICAR SE OUVE MUDANÇAS NA IMAGEM,
+    // E AI SIM ATUALIZAR O USUARIO
+    // /api/users/upload/banner
+    // /api/users/upload/avatar
+
+    function updateProfile() {
+        fetch('/api/users/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                displayName,
+                bio,
+                location,
+                status,
+                banner,
+                avatar
+            })
+        });
+    }
+</script>
+</html>
