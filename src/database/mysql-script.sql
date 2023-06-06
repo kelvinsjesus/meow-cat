@@ -1,8 +1,7 @@
 CREATE DATABASE freestyle;
 USE freestyle;
-DROP DATABASE freestyle;
--- CREATE TABLES
 
+-- CREATE TABLES --
 CREATE TABLE User (
     id char(12) PRIMARY KEY,
     name varchar(48) NOT NULL,
@@ -23,9 +22,9 @@ CREATE TABLE UserProfile(
     location varchar(64),
     status varchar(32),
     userId char(12),
-    CONSTRAINT fkUser FOREIGN KEY (userId)
-        REFERENCES user(id)
-    updatedAt datetime DEFAULT current_timestamp,
+    CONSTRAINT fkProfileOwner FOREIGN KEY (userId)
+        REFERENCES User(id),
+    updatedAt datetime DEFAULT current_timestamp
 );
     -- pets int(select)
 
@@ -52,8 +51,20 @@ CREATE TABLE Pet (
 ALTER TABLE Pet MODIFY COLUMN gender longtext;
 -- Resolvido!
 
+CREATE TABLE PetProfile(
+    id int PRIMARY KEY auto_increment,
+    avatarUrl varchar(256),
+    bannerUrl varchar(256),
+    bio varchar(256),
+    location varchar(64),
+    status varchar(32),
+    petId int,
+    CONSTRAINT fkPetProfileOwner FOREIGN KEY (userId)
+        REFERENCES Pet(id),
+    updatedAt datetime DEFAULT current_timestamp
+);
 
--- INSERT DATA
+-- INSERT DATA --
 INSERT INTO User (id, name, username, email, password) VALUES
     ('105aea522f8c', 'Kelvin Santos', 'kelvin', 'kelvin@email.com', 'secret'),
     ('13de7db5fe12', 'John Doe', 'john_doe', 'john.doe@email.com', 'secret'),
@@ -70,16 +81,33 @@ INSERT INTO Pet (name, species, breed, gender, weekLife, weight, userId) VALUES
     ('Bela', 'Canino', 'Pitbull', 'F', 102, 9.2, '105aea522f8c'),
     ('Chocolate', 'Canino', 'Pitbull', 'M', 102, 11.7, '105aea522f8c');
 
+INSERT INTO PetProfile (avatarUrl, bannerUrl, bio, location, status, petId) VALUES
+    ('public/assets/avatar/vodcat.png', 'public/assets/banner/vodcat.png', 'Eu tenho o gato mais lindo do mundo', '😸', 'São Paulo, SP', 1);
+
+
+-- DESC TABLES --
+DESC Pet;
+DESC PetProfile
+DESC User;
+DESC UserProfile;
+
+-- CLEAR TABLES --
 TRUNCATE Pet;
+TRUNCATE PetProfile
 TRUNCATE User;
+TRUNCATE UserProfile;
 
--- SELECTS
+-- SELECTS --
+-- ALL
 SELECT * FROM Pet;
+SELECT * FROM PetProfile
 SELECT * FROM User;
+SELECT * FROM UserProfile;
 
+-- SPECIFIC
 SELECT * FROM User WHERE email = 'kelvin@email.com' AND password = 'secret';
 
-
+-- JOIN'S
 SELECT u.name,
 p.id as IdPet,
 p.name NomePet
@@ -87,4 +115,15 @@ FROM User as u JOIN Pet as p
 		ON p.userId = u.id
 			WHERE u.id = '105aea522f8c';
 
+SELECT 
+User.id,
+User.name, 
+User.username, 
+User.createdAt,
+Profile.avatarUrl, Profile.bannerUrl, Profile.bio, Profile.location, Profile.status
+FROM UserProfile as Profile JOIN User
+	ON Profile.userId = User.id
+		WHERE userId = '105aea522f8c';
 
+-- RESET DB -- 
+DROP DATABASE freestyle;
