@@ -1,3 +1,6 @@
+// by @kelvinsjesus
+// my github: https://www.github.com/kelvinsjesus
+
 const chars = '0123456789abcdefghijklmnopqrstuvwxyz';
 
 function uniqueId(base, maxChars) {
