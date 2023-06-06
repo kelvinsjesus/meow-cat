@@ -1,0 +1,66 @@
+@import url('styles.css');
+
+.fields-profile-edit {
+    /* background-color: #3669ce; */
+}
+
+.profile-preview {
+    display: flex;
+    align-items: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-banner {
+    width: 380px;
+    height: 140px;
+    position: relative;
+    overflow: hidden;
+    background-color: #e5e7eb;
+    border-radius: 4px 4px 0 0;
+}
+
+.card-banner img {
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    -o-object-fit: cover;
+    border-radius: 4px 4px 0 0;
+
+}
+
+.card-bar {
+    background: #f3f4f6;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 0 0 4px 4px;
+    align-items: center;
+}
+
+.card-avatar {
+    height: 140px;
+    width: 48px;
+    height: 48px;
+}
+
+.card-avatar img {
+    border-radius: 4px;
+    display: block;
+    height: 100%;
+    margin: 0;
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 100%;
+}
+
+.display-name {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}

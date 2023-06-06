@@ -1,0 +1,15 @@
+#img-avatar {
+    width: 240px;
+}
+
+.wrapper-banner {
+    width: 100%;
+    max-width: 1280px;
+    height: 320px;
+    overflow: hidden;
+}
+
+#img-banner {
+    width: 1280px;
+    object-fit: cover;
+}
