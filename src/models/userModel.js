@@ -94,7 +94,8 @@ function updatePassword(id, password, token) {
 
 function getUserProfile(userId) {
     var statementSQL = `
-    SELECT User.id, User.name, User.username, User.createdAt, 
+    SELECT User.id, User.name, User.username, 
+        DATE_FORMAT(User.createdAt,'%d/%m/%Y %H:%i:%s') as createdAt, 
         Profile.avatarUrl, Profile.bannerUrl, 
         Profile.bio, Profile.location, Profile.status
             FROM UserProfile as Profile JOIN User
