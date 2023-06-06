@@ -5,60 +5,69 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Perfil</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Styles -->
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/edit-profile.css">
 </head>
 <body>
-    <div class="fields-profile-edit">
-        <div class="field">
-            <label for="display-name">Nome de exibição</label>
-            <input type="text" id="display-name">
-        </div>
-        <div class="field">
-            <label for="bio">Bio</label>
-            <textarea type="text" id="bio"></textarea>
-        </div>
-        <div class="field">
-            <label for="location">Location</label>
-            <input type="text" id="location">
-        </div>
-        <div class="field">
-            <label for="status">Status</label>
-            <input type="text" id="status">
-        </div>
-    </div>
-
-    <div class="profile-preview">
-        <div class="card">
-            <div class="card-banner">
-                <img src="../../assets/uploads/banner/catinho-banner.jpg">
-            </div>
-            <div class="card-bar">
-                <div class="card-avatar">
-                    <img src="../../assets/uploads/avatar/vodcat.png">
+    <div class="container">
+        <div class="content">
+            <div class="profile-edit">
+                <div class="profile-preview">
+                    <div class="card">
+                        <div class="card-banner">
+                            <img id="profileBanner">
+                        </div>
+                        <div class="card-bar">
+                            <div class="card-avatar">
+                                <img id="profileAvatar">
+                            </div>
+                            <div class="display">
+                                <span id="display_name" class="font-small" style="font-weight: 500;">name</span>
+                                <span id="display_username" class="font-small" style="font-weight: 500;">@username</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="choose-image">
+                        <div class="field">
+                            <label for="banner">Escolha uma foto para o seu banner</label>
+                            <input type="file" id="banner">      
+                        </div>
+                        <div class="field">
+                            <label for="avatar">Escolha uma foto de perfil</label>
+                            <input type="file" id="avatar" accept="image/png, image/jpeg">
+                        </div>
+                    </div>
                 </div>
-                <div class="display-name">
-                    <span>Kelvin Santos</span>
-                    <span>@kelvin</span>
+
+                <div class="field">
+                    <label for="display-name">Nome de exibição</label>
+                    <input type="text" id="display-name">
+                </div>
+                <div class="field">
+                    <label for="bio">Bio</label>
+                    <textarea type="text" id="bio"></textarea>
+                </div>
+                <div class="field">
+                    <label for="location">Location</label>
+                    <input type="text" id="location">
+                </div>
+                <div class="field">
+                    <label for="status">Status</label>
+                    <input type="text" id="status">
+                </div>
+                <div>
+                    <button class="save" id="submit">
+                        Salvar mudanças
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="choose-image">
-            <div class="field">
-                <label for="banner">Escolha uma foto para o seu banner:</label>
-                <input type="file" id="banner">      
-            </div>
-            <div class="field">
-                <label for="avatar">Escolha uma foto de perfil:</label>
-                <input type="file" id="avatar" accept="image/png, image/jpeg">
-            </div>
-        </div>
-    </div>
 
-    <div>
-        <button class="save" id="save">
-            Salvar mudanças
-        </button>
+        </div>
     </div>
 </body>
 <script>
@@ -71,14 +80,12 @@
     const avatar = document.getElementById('avatar');
 
     // Button
-    const save = document.getElementById('save');
+    const btnSubmit = document.getElementById('submit');
 
-    // Esse setItem é apenas uma simulação, pois ele deve ocorrer no login,
-    // Vai ser utilizado para recuperação dos dados configurados no perfil
     const userStorage = JSON.parse(sessionStorage.getItem('authenticatedUser'));
     console.log(userStorage);
 
-    let profileConfig;
+    let profile;
 
     function loadUserConfig() {
         fetch(`/api/users/${userStorage.username}`, {
@@ -89,15 +96,24 @@
         }).then(function(result) {
             result.json()
             .then(json => {
-                profileConfig = json[0];
+                sessionStorage.setItem('profileConfig', JSON.stringify(json[0]));
 
-                // localStorage.setItem('profile', JSON.stringify(profileConfig));
+                profile = JSON.parse(sessionStorage.profileConfig);
                 
             }).then(() => {
-                displayName.value = profileConfig.name;
-                bio.value = profileConfig.bio;
-                userLocation.value = profileConfig.location;
-                status.value = profileConfig.status;
+                // Images
+                profileAvatar.src = profile.avatarUrl || '../../assets/uploads/avatar/vodcat.png';
+                profileBanner.src = profile.bannerUrl || '../../assets/uploads/banner/catinho-banner.jpg';
+
+                // Text
+                display_name.innerText = profile.name;
+                display_username.innerText = `@${profile.username}`;
+
+                // Input Values
+                displayName.value = profile.name;
+                bio.value = profile.bio;
+                userLocation.value = profile.location;
+                status.value = profile.status;
             })
         });
     }
